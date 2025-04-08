@@ -7,13 +7,11 @@ public class ContaBancaria {
         this.saldo = valorInicial;
         if (valorInicial <= 500) {
             this.chequeEspecialTotal = 50;
-        }else {
+        } else {
             this.chequeEspecialTotal = valorInicial * 0.5;
         }
-        this.chequeEspecialTotal = valorInicial * 0.5;
+        this.chequeEspecialUsado = 0;
     }
-    this.chequeEspecialUsado = 0;
-}
 
 public double getSaldo() {
     return saldo;
@@ -44,4 +42,25 @@ public void depositar(double valor) {
     }
     saldo += valor;
     System.out.printf("Depósito realizado com sucesso! Novo saldo: R$ %.2f%n", saldo);
+}
+
+    public void sacar(double valor) {
+        if (valor <= saldo) {
+            saldo -= valor;
+            System.out.printf("Saque de R$ %.2f realizado com sucesso.%n", valor);
+        } else {
+            double restante = valor - saldo;
+            if (restante <= getChequeEspecialDisponivel()) {
+                chequeEspecialUsado += restante;
+                saldo = 0;
+                System.out.printf("Saque de R$ %.2f realizado usando cheque especial.%n", valor);
+            } else {
+                System.out.println("Saldo insuficiente e cheque especial insuficiente. Consulte a Central de atendimento para uma análise emergencial.");
+            }
+        }
+    }
+
+    public void pagarBoleto(double valor) {
+        sacar(valor);
+    }
 }
