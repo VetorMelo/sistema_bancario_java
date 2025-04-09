@@ -14,8 +14,12 @@ public class ContaBancaria {
     }
 
     public double getSaldo() {
+        if (saldo == 0 && chequeEspecialUsado > 0) {
+            return -chequeEspecialUsado;
+        }
         return saldo;
     }
+
 
     public double getChequeEspecialDisponivel() {
         return chequeEspecialTotal - chequeEspecialUsado;
